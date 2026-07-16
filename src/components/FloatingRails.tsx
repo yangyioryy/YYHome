@@ -22,10 +22,10 @@ const socialLinks = [
     external: false,
   },
   {
-    label: '查看简历',
+    label: '简历暂未开放',
     href: profile.resume,
     icon: FileText,
-    external: true,
+    external: false,
   },
 ] as const
 
@@ -51,12 +51,12 @@ export function FloatingRails() {
         <span className="social-rail-line" />
       </aside>
 
-      <a className="scroll-cue" href="#about" aria-label="向下滚动到关于我">
+      <div className="scroll-cue" aria-hidden="true">
         <span className="scroll-cue-line">
           <span className="scroll-cue-dot" />
         </span>
-        <span className="scroll-cue-label">SCROLL</span>
-      </a>
+        <span className="scroll-cue-label">CLICK</span>
+      </div>
     </>
   )
 }

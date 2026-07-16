@@ -1,21 +1,9 @@
-import type { IconType } from 'react-icons'
+import { Activity, FileImage, ImageOff } from 'lucide-react'
 import type { CSSProperties } from 'react'
-import { RiOpenaiFill } from 'react-icons/ri'
-import {
-  SiDocker,
-  SiFigma,
-  SiGithub,
-  SiGooglescholar,
-  SiLatex,
-  SiNotion,
-  SiPytorch,
-  SiPython,
-} from 'react-icons/si'
-import { VscVscode } from 'react-icons/vsc'
 
 type Tool = {
   name: string
-  icon: IconType
+  icon: typeof ImageOff
   color: string
   glow: string
   href: string
@@ -23,74 +11,25 @@ type Tool = {
 
 const tools: Tool[] = [
   {
-    name: 'VS Code',
-    icon: VscVscode,
-    color: '#24a8f2',
-    glow: '36, 168, 242',
-    href: 'https://code.visualstudio.com/',
+    name: '图片去除背景',
+    icon: ImageOff,
+    color: '#76b8ff',
+    glow: '118, 184, 255',
+    href: 'https://www.iloveimg.com/zh-cn/remove-background',
   },
   {
-    name: 'GitHub',
-    icon: SiGithub,
-    color: '#f5f7fa',
-    glow: '225, 232, 244',
-    href: 'https://github.com/',
+    name: 'PDF 插入图片',
+    icon: FileImage,
+    color: '#9aaeff',
+    glow: '154, 174, 255',
+    href: 'https://pdfcandy.com/cn/add-image-to-pdf.html',
   },
   {
-    name: 'Docker',
-    icon: SiDocker,
-    color: '#2496ed',
-    glow: '36, 150, 237',
-    href: 'https://www.docker.com/',
-  },
-  {
-    name: 'Python',
-    icon: SiPython,
-    color: '#ffd343',
-    glow: '255, 211, 67',
-    href: 'https://www.python.org/',
-  },
-  {
-    name: 'PyTorch',
-    icon: SiPytorch,
-    color: '#ee4c2c',
-    glow: '238, 76, 44',
-    href: 'https://pytorch.org/',
-  },
-  {
-    name: 'Notion',
-    icon: SiNotion,
-    color: '#ffffff',
-    glow: '225, 232, 244',
-    href: 'https://www.notion.so/',
-  },
-  {
-    name: 'Figma',
-    icon: SiFigma,
-    color: '#a259ff',
-    glow: '162, 89, 255',
-    href: 'https://www.figma.com/',
-  },
-  {
-    name: 'LaTeX',
-    icon: SiLatex,
-    color: '#35c9bc',
-    glow: '53, 201, 188',
-    href: 'https://www.latex-project.org/',
-  },
-  {
-    name: 'Google Scholar',
-    icon: SiGooglescholar,
-    color: '#4285f4',
-    glow: '66, 133, 244',
-    href: 'https://scholar.google.com/',
-  },
-  {
-    name: 'ChatGPT',
-    icon: RiOpenaiFill,
-    color: '#10a37f',
-    glow: '16, 163, 127',
-    href: 'https://chatgpt.com/',
+    name: '探针',
+    icon: Activity,
+    color: '#54d5ff',
+    glow: '84, 213, 255',
+    href: 'https://monitor.clever.ccwu.cc/#/',
   },
 ]
 
@@ -100,29 +39,29 @@ export function ToolsDock() {
       <div className="section-divider" aria-hidden="true">
         <span className="divider-line" />
         <span className="divider-dot" />
-        <p>TOOLS I USE</p>
+        <p>QUICK TOOLS</p>
         <span className="divider-dot" />
         <span className="divider-line" />
       </div>
 
-      <div className="tools-dock" aria-label="常用开发与科研工具">
+      <div className="tools-dock" aria-label="常用在线工具">
         {tools.map(({ name, icon: Icon, color, glow, href }, index) => (
           <a
             className="tool-item"
             href={href}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             key={name}
             style={
               {
                 '--tool-color': color,
                 '--tool-glow': glow,
-                '--tool-delay': `${index * 45}ms`,
+                '--tool-delay': `${index * 70}ms`,
               } as CSSProperties
             }
           >
             <span className="tool-icon-frame">
-              <Icon className="tool-icon" aria-hidden="true" />
+              <Icon className="tool-icon" aria-hidden="true" strokeWidth={1.55} />
             </span>
             <span className="tool-name">{name}</span>
           </a>

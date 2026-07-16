@@ -1,14 +1,8 @@
-import { Download, Menu, Moon, Sun, X } from 'lucide-react'
+import { Download, Menu, X } from 'lucide-react'
 import { useState } from 'react'
-import { navigationItems, profile, type SectionId } from '../data/site'
+import { navigationItems, profile } from '../data/site'
 
-type HeaderProps = {
-  activeSection: SectionId
-  theme: 'dark' | 'light'
-  onThemeToggle: () => void
-}
-
-export function Header({ activeSection, theme, onThemeToggle }: HeaderProps) {
+export function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
 
   const closeMenu = () => setMenuOpen(false)
@@ -21,34 +15,28 @@ export function Header({ activeSection, theme, onThemeToggle }: HeaderProps) {
         </a>
 
         <nav className="desktop-navigation" aria-label="主导航">
-          {navigationItems.map((item) => (
-            <a
-              key={item.id}
-              className={activeSection === item.id ? 'nav-link is-active' : 'nav-link'}
-              href={`#${item.id}`}
-              aria-current={activeSection === item.id ? 'page' : undefined}
-            >
-              {item.label}
-            </a>
-          ))}
+          {navigationItems.map((item) => {
+            const isHome = item.id === 'home'
+
+            return (
+              <a
+                key={item.id}
+                className={isHome ? 'nav-link is-active' : 'nav-link'}
+                href="#home"
+                aria-current={isHome ? 'page' : undefined}
+                title={isHome ? undefined : '暂未开放，点击返回首页'}
+              >
+                {item.label}
+              </a>
+            )
+          })}
         </nav>
 
         <div className="header-actions">
-          <button
-            className="icon-button theme-toggle"
-            type="button"
-            onClick={onThemeToggle}
-            aria-label={theme === 'dark' ? '切换至浅色主题' : '切换至深色主题'}
-            title={theme === 'dark' ? '切换至浅色主题' : '切换至深色主题'}
-          >
-            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-          </button>
-
           <a
             className="resume-button desktop-resume"
             href={profile.resume}
-            target="_blank"
-            rel="noreferrer"
+            title="简历暂未开放"
           >
             Resume
             <Download size={15} aria-hidden="true" />
@@ -72,22 +60,26 @@ export function Header({ activeSection, theme, onThemeToggle }: HeaderProps) {
         className={menuOpen ? 'mobile-navigation is-open' : 'mobile-navigation'}
         aria-label="移动端导航"
       >
-        {navigationItems.map((item) => (
-          <a
-            key={item.id}
-            className={activeSection === item.id ? 'mobile-nav-link is-active' : 'mobile-nav-link'}
-            href={`#${item.id}`}
-            onClick={closeMenu}
-          >
-            <span>{item.label}</span>
-            <span className="mobile-nav-index">0{navigationItems.indexOf(item) + 1}</span>
-          </a>
-        ))}
+        {navigationItems.map((item, index) => {
+          const isHome = item.id === 'home'
+
+          return (
+            <a
+              key={item.id}
+              className={isHome ? 'mobile-nav-link is-active' : 'mobile-nav-link'}
+              href="#home"
+              onClick={closeMenu}
+              title={isHome ? undefined : '暂未开放，点击返回首页'}
+            >
+              <span>{item.label}</span>
+              <span className="mobile-nav-index">0{index + 1}</span>
+            </a>
+          )
+        })}
         <a
           className="resume-button mobile-resume"
           href={profile.resume}
-          target="_blank"
-          rel="noreferrer"
+          title="简历暂未开放"
           onClick={closeMenu}
         >
           Open resume

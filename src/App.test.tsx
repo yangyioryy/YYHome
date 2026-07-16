@@ -1,44 +1,75 @@
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import App from './App'
 import { navigationItems } from './data/site'
 
-describe('YYHome', () => {
-  beforeEach(() => {
-    document.documentElement.dataset.theme = 'dark'
-  })
+const expectedTools = [
+  {
+    name: '图片去除背景',
+    href: 'https://www.iloveimg.com/zh-cn/remove-background',
+  },
+  {
+    name: 'PDF 插入图片',
+    href: 'https://pdfcandy.com/cn/add-image-to-pdf.html',
+  },
+  {
+    name: '探针',
+    href: 'https://monitor.clever.ccwu.cc/#/',
+  },
+] as const
 
-  it('渲染完整导航、章节和工具矩阵', () => {
+describe('YYHome', () => {
+  it('只渲染 Home 内容并保留五个首页导航入口', () => {
     const { container } = render(<App />)
     const navigation = screen.getByRole('navigation', { name: '主导航' })
 
     navigationItems.forEach(({ id, label }) => {
       expect(within(navigation).getByRole('link', { name: label })).toHaveAttribute(
         'href',
-        `#${id}`,
+        '#home',
       )
-      expect(container.querySelector(`#${id}`)).toBeInTheDocument()
+
+      if (id !== 'home') {
+        expect(container.querySelector('#' + id)).not.toBeInTheDocument()
+      }
     })
 
-    expect(container.querySelectorAll('.tool-item')).toHaveLength(10)
-    expect(container.querySelector('#home')).not.toHaveTextContent('DEVELOPER / RESEARCHER')
-    expect(container.querySelector('#home')).not.toHaveTextContent('Explore selected work')
-    expect(screen.getByRole('link', { name: 'Resume' })).toHaveAttribute(
-      'href',
-      './resume.pdf',
+    expect(container.querySelector('#home')).toBeInTheDocument()
+    expect(within(navigation).getByRole('link', { name: 'Home' })).toHaveAttribute(
+      'aria-current',
+      'page',
     )
   })
 
-  it('切换主题并写入本地存储', async () => {
-    const user = userEvent.setup()
+  it('渲染三个指定工具和新的邮件链接', () => {
+    const { container } = render(<App />)
+
+    expect(container.querySelectorAll('.tool-item')).toHaveLength(3)
+    expectedTools.forEach(({ name, href }) => {
+      expect(screen.getByRole('link', { name })).toHaveAttribute('href', href)
+      expect(screen.getByRole('link', { name })).toHaveAttribute('target', '_blank')
+    })
+
+    expect(screen.getByRole('link', { name: '发送邮件' })).toHaveAttribute(
+      'href',
+      'mailto:yagnyioryy@gmail.com',
+    )
+  })
+
+  it('保留简历入口但移除主题切换功能', () => {
     render(<App />)
 
-    await user.click(screen.getByRole('button', { name: '切换至浅色主题' }))
-
-    expect(document.documentElement).toHaveAttribute('data-theme', 'light')
-    expect(localStorage.getItem('yyhome-theme')).toBe('light')
-    expect(screen.getByRole('button', { name: '切换至深色主题' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Resume' })).toHaveAttribute('href', '#home')
+    expect(screen.getByRole('link', { name: 'Open resume' })).toHaveAttribute(
+      'href',
+      '#home',
+    )
+    expect(screen.getByRole('link', { name: '简历暂未开放' })).toHaveAttribute(
+      'href',
+      '#home',
+    )
+    expect(screen.queryByRole('button', { name: /切换至.+主题/ })).not.toBeInTheDocument()
   })
 
   it('可以打开和关闭移动端导航', async () => {
