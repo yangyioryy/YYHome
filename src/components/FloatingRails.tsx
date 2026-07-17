@@ -1,5 +1,5 @@
 import { FileText, Mail } from 'lucide-react'
-import { FaGithub, FaLinkedinIn } from 'react-icons/fa6'
+import { FaGithub, FaTelegram } from 'react-icons/fa6'
 import { profile } from '../data/site'
 
 const socialLinks = [
@@ -10,9 +10,9 @@ const socialLinks = [
     external: true,
   },
   {
-    label: 'LinkedIn',
-    href: profile.linkedin,
-    icon: FaLinkedinIn,
+    label: 'Telegram',
+    href: profile.telegram,
+    icon: FaTelegram,
     external: true,
   },
   {

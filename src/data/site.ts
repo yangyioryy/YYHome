@@ -8,7 +8,7 @@ export const navigationItems = [
 
 export const profile = {
   github: 'https://github.com/yangyioryy',
-  linkedin: 'https://www.linkedin.com/in/yangyioryy/',
+  telegram: 'https://t.me/beginner_forever',
   email: 'yagnyioryy@gmail.com',
   resume: '#home',
 } as const

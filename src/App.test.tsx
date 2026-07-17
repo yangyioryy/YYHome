@@ -42,7 +42,7 @@ describe('YYHome', () => {
     )
   })
 
-  it('渲染三个指定工具和新的邮件链接', () => {
+  it('渲染三个指定工具、Telegram 和邮件链接', () => {
     const { container } = render(<App />)
 
     expect(container.querySelectorAll('.tool-item')).toHaveLength(3)
@@ -51,6 +51,14 @@ describe('YYHome', () => {
       expect(screen.getByRole('link', { name })).toHaveAttribute('target', '_blank')
     })
 
+    expect(screen.getByRole('link', { name: 'Telegram' })).toHaveAttribute(
+      'href',
+      'https://t.me/beginner_forever',
+    )
+    expect(screen.getByRole('link', { name: 'Telegram' })).toHaveAttribute(
+      'target',
+      '_blank',
+    )
     expect(screen.getByRole('link', { name: '发送邮件' })).toHaveAttribute(
       'href',
       'mailto:yagnyioryy@gmail.com',
