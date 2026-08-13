@@ -17,6 +17,10 @@ const expectedTools = [
     name: '探针',
     href: 'https://monitor.clever.ccwu.cc/#/',
   },
+  {
+    name: '视频转gif',
+    href: 'https://new.express.adobe.com/home/tools/convert-to-gif',
+  },
 ] as const
 
 describe('YYHome', () => {
@@ -42,10 +46,10 @@ describe('YYHome', () => {
     )
   })
 
-  it('渲染三个指定工具、Telegram 和邮件链接', () => {
+  it('渲染四个指定工具、Telegram 和邮件链接', () => {
     const { container } = render(<App />)
 
-    expect(container.querySelectorAll('.tool-item')).toHaveLength(3)
+    expect(container.querySelectorAll('.tool-item')).toHaveLength(4)
     expectedTools.forEach(({ name, href }) => {
       expect(screen.getByRole('link', { name })).toHaveAttribute('href', href)
       expect(screen.getByRole('link', { name })).toHaveAttribute('target', '_blank')

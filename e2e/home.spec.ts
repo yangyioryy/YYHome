@@ -15,6 +15,10 @@ const expectedTools = [
     name: '探针',
     href: 'https://monitor.clever.ccwu.cc/#/',
   },
+  {
+    name: '视频转gif',
+    href: 'https://new.express.adobe.com/home/tools/convert-to-gif',
+  },
 ] as const
 
 test('桌面端只保留首页内容并支持点击特效', async ({ page }) => {
@@ -25,7 +29,7 @@ test('桌面端只保留首页内容并支持点击特效', async ({ page }) => 
 
   await expect(page.locator('.cosmic-scene')).toBeVisible()
   await expect(page.locator('.effects-canvas')).toBeVisible()
-  await expect(page.locator('.tool-item')).toHaveCount(3)
+  await expect(page.locator('.tool-item')).toHaveCount(4)
   await expect(page.locator('#about, #projects, #blog, #contact')).toHaveCount(0)
   await expect(page.getByRole('button', { name: /切换至.+主题/ })).toHaveCount(0)
 
@@ -96,7 +100,7 @@ test('桌面端只保留首页内容并支持点击特效', async ({ page }) => 
   await page.screenshot({ path: 'artifacts/home-fullpage.png', fullPage: true })
 })
 
-test('手机端菜单和三列工具栏可用', async ({ page }) => {
+test('手机端菜单和四列工具栏可用', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto('/')
@@ -119,11 +123,11 @@ test('手机端菜单和三列工具栏可用', async ({ page }) => {
     '#home',
   )
 
-  await expect(page.locator('.tool-item')).toHaveCount(3)
+  await expect(page.locator('.tool-item')).toHaveCount(4)
   const toolColumnCount = await page.locator('.tools-dock').evaluate((dock) => {
     return getComputedStyle(dock).gridTemplateColumns.split(' ').length
   })
-  expect(toolColumnCount).toBe(3)
+  expect(toolColumnCount).toBe(4)
 
   const hasHorizontalOverflow = await page.evaluate(
     () => document.documentElement.scrollWidth > window.innerWidth + 1,

@@ -1,4 +1,4 @@
-import { Activity, FileImage, ImageOff } from 'lucide-react'
+import { Activity, FileImage, ImageOff, Video } from 'lucide-react'
 import type { CSSProperties } from 'react'
 
 type Tool = {
@@ -30,6 +30,13 @@ const tools: Tool[] = [
     color: '#54d5ff',
     glow: '84, 213, 255',
     href: 'https://monitor.clever.ccwu.cc/#/',
+  },
+  {
+    name: '视频转gif',
+    icon: Video,
+    color: '#ff6478',
+    glow: '255, 100, 120',
+    href: 'https://new.express.adobe.com/home/tools/convert-to-gif',
   },
 ]
 
