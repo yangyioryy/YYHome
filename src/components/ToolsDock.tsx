@@ -1,44 +1,44 @@
-import { Activity, FileImage, ImageOff, Video } from 'lucide-react'
+import {
+  Activity,
+  Calculator,
+  Code2,
+  FileImage,
+  FileText,
+  ImageOff,
+  Languages,
+  Link,
+  Palette,
+  Search,
+  Video,
+  Wrench,
+} from 'lucide-react'
 import type { CSSProperties } from 'react'
+import { siteContent, type ToolIconKey } from '../data/site-content'
 
-type Tool = {
-  name: string
-  icon: typeof ImageOff
-  color: string
-  glow: string
-  href: string
+const toolIcons: Record<ToolIconKey, typeof ImageOff> = {
+  activity: Activity,
+  calculator: Calculator,
+  code: Code2,
+  'file-image': FileImage,
+  'file-text': FileText,
+  'image-off': ImageOff,
+  languages: Languages,
+  link: Link,
+  palette: Palette,
+  search: Search,
+  video: Video,
+  wrench: Wrench,
 }
 
-const tools: Tool[] = [
-  {
-    name: '图片去除背景',
-    icon: ImageOff,
-    color: '#76b8ff',
-    glow: '118, 184, 255',
-    href: 'https://www.iloveimg.com/zh-cn/remove-background',
-  },
-  {
-    name: 'PDF 插入图片',
-    icon: FileImage,
-    color: '#9aaeff',
-    glow: '154, 174, 255',
-    href: 'https://pdfcandy.com/cn/add-image-to-pdf.html',
-  },
-  {
-    name: '探针',
-    icon: Activity,
-    color: '#54d5ff',
-    glow: '84, 213, 255',
-    href: 'https://monitor.clever.ccwu.cc/#/',
-  },
-  {
-    name: '视频转gif',
-    icon: Video,
-    color: '#ff6478',
-    glow: '255, 100, 120',
-    href: 'https://new.express.adobe.com/home/tools/convert-to-gif',
-  },
-]
+function hexToRgb(hex: string) {
+  const value = hex.replace('#', '')
+  const normalized = value.length === 3 ? value.replace(/(.)/g, '$1$1') : value
+  const channels = normalized.match(/.{2}/g)?.map((channel) => Number.parseInt(channel, 16))
+
+  return channels?.length === 3 && channels.every(Number.isFinite)
+    ? channels.join(', ')
+    : '118, 184, 255'
+}
 
 export function ToolsDock() {
   return (
@@ -52,27 +52,31 @@ export function ToolsDock() {
       </div>
 
       <div className="tools-dock" aria-label="常用在线工具">
-        {tools.map(({ name, icon: Icon, color, glow, href }, index) => (
-          <a
-            className="tool-item"
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-            key={name}
-            style={
-              {
-                '--tool-color': color,
-                '--tool-glow': glow,
-                '--tool-delay': `${index * 70}ms`,
-              } as CSSProperties
-            }
-          >
-            <span className="tool-icon-frame">
-              <Icon className="tool-icon" aria-hidden="true" strokeWidth={1.55} />
-            </span>
-            <span className="tool-name">{name}</span>
-          </a>
-        ))}
+        {siteContent.tools.map(({ id, name, icon, color, href }, index) => {
+          const Icon = toolIcons[icon] ?? Wrench
+
+          return (
+            <a
+              className="tool-item"
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              key={id}
+              style={
+                {
+                  '--tool-color': color,
+                  '--tool-glow': hexToRgb(color),
+                  '--tool-delay': `${Math.min(index, 8) * 70}ms`,
+                } as CSSProperties
+              }
+            >
+              <span className="tool-icon-frame">
+                <Icon className="tool-icon" aria-hidden="true" strokeWidth={1.55} />
+              </span>
+              <span className="tool-name">{name}</span>
+            </a>
+          )
+        })}
       </div>
 
       <div className="tools-tail" aria-hidden="true">

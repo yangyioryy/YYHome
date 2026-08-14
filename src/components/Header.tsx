@@ -4,6 +4,7 @@ import { navigationItems, profile } from '../data/site'
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const resumeAvailable = profile.resume !== '#home'
 
   const closeMenu = () => setMenuOpen(false)
 
@@ -36,7 +37,7 @@ export function Header() {
           <a
             className="resume-button desktop-resume"
             href={profile.resume}
-            title="简历暂未开放"
+            title={resumeAvailable ? '打开简历' : '简历暂未开放'}
           >
             Resume
             <Download size={15} aria-hidden="true" />
@@ -79,7 +80,7 @@ export function Header() {
         <a
           className="resume-button mobile-resume"
           href={profile.resume}
-          title="简历暂未开放"
+          title={resumeAvailable ? '打开简历' : '简历暂未开放'}
           onClick={closeMenu}
         >
           Open resume

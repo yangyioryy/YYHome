@@ -22,7 +22,7 @@ const socialLinks = [
     external: false,
   },
   {
-    label: '简历暂未开放',
+    label: profile.resume === '#home' ? '简历暂未开放' : '打开简历',
     href: profile.resume,
     icon: FileText,
     external: false,

@@ -9,3 +9,6 @@ artifacts/
 .DS_Store
 Thumbs.db
 .playwright-mcp/
+.env
+.env.*
+!.env.example

@@ -18,8 +18,8 @@ const expectedTools = [
     href: 'https://monitor.clever.ccwu.cc/#/',
   },
   {
-    name: '视频转gif',
-    href: 'https://new.express.adobe.com/home/tools/convert-to-gif',
+    name: '视频转 GIF',
+    href: 'https://www.aconvert.com/cn/video/mp4-to-gif/',
   },
 ] as const
 

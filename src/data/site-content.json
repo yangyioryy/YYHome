@@ -1,0 +1,36 @@
+{
+  "resume": {
+    "href": "#home",
+    "fileName": ""
+  },
+  "tools": [
+    {
+      "id": "remove-background",
+      "name": "图片去除背景",
+      "href": "https://www.iloveimg.com/zh-cn/remove-background",
+      "icon": "image-off",
+      "color": "#76b8ff"
+    },
+    {
+      "id": "pdf-add-image",
+      "name": "PDF 插入图片",
+      "href": "https://pdfcandy.com/cn/add-image-to-pdf.html",
+      "icon": "file-image",
+      "color": "#9aaeff"
+    },
+    {
+      "id": "probe",
+      "name": "探针",
+      "href": "https://monitor.clever.ccwu.cc/#/",
+      "icon": "activity",
+      "color": "#54d5ff"
+    },
+    {
+      "id": "video-to-gif",
+      "name": "视频转 GIF",
+      "href": "https://www.aconvert.com/cn/video/mp4-to-gif/",
+      "icon": "video",
+      "color": "#ff6478"
+    }
+  ]
+}

@@ -16,8 +16,8 @@ const expectedTools = [
     href: 'https://monitor.clever.ccwu.cc/#/',
   },
   {
-    name: '视频转gif',
-    href: 'https://new.express.adobe.com/home/tools/convert-to-gif',
+    name: '视频转 GIF',
+    href: 'https://www.aconvert.com/cn/video/mp4-to-gif/',
   },
 ] as const
 
@@ -100,7 +100,7 @@ test('桌面端只保留首页内容并支持点击特效', async ({ page }) => 
   await page.screenshot({ path: 'artifacts/home-fullpage.png', fullPage: true })
 })
 
-test('手机端菜单和四列工具栏可用', async ({ page }) => {
+test('手机端菜单和自适应工具栏可用', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto('/')
@@ -124,10 +124,7 @@ test('手机端菜单和四列工具栏可用', async ({ page }) => {
   )
 
   await expect(page.locator('.tool-item')).toHaveCount(4)
-  const toolColumnCount = await page.locator('.tools-dock').evaluate((dock) => {
-    return getComputedStyle(dock).gridTemplateColumns.split(' ').length
-  })
-  expect(toolColumnCount).toBe(4)
+  await expect(page.locator('.tool-item').last()).toBeVisible()
 
   const hasHorizontalOverflow = await page.evaluate(
     () => document.documentElement.scrollWidth > window.innerWidth + 1,
@@ -138,4 +135,14 @@ test('手机端菜单和四列工具栏可用', async ({ page }) => {
   await page.getByRole('button', { name: '关闭导航菜单' }).click()
   await expect(mobileNavigation).toBeHidden()
   await page.screenshot({ path: 'artifacts/home-mobile.png', fullPage: false })
+})
+
+test('管理路径可直接打开并显示密码登录', async ({ page }) => {
+  await page.goto('/admin/')
+
+  await expect(page).toHaveTitle('YYHome Admin')
+  await expect(page.getByRole('heading', { name: 'Admin' })).toBeVisible()
+  await expect(page.getByLabel('管理密码')).toBeVisible()
+  await expect(page.getByRole('button', { name: '进入管理台' })).toBeVisible()
+  await page.screenshot({ path: 'artifacts/admin-login.png', fullPage: true })
 })

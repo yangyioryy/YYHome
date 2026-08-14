@@ -1,3 +1,5 @@
+import { siteContent } from './site-content'
+
 export const navigationItems = [
   { id: 'home', label: 'Home' },
   { id: 'about', label: 'About' },
@@ -10,5 +12,5 @@ export const profile = {
   github: 'https://github.com/yangyioryy',
   telegram: 'https://t.me/beginner_forever',
   email: 'yagnyioryy@gmail.com',
-  resume: '#home',
+  resume: siteContent.resume.href,
 } as const
